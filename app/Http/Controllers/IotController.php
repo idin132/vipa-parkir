@@ -1,28 +1,44 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Anggota;
+use App\Events\AnggotaUpdated;
+
 
 class IotController extends Controller
 {
-    public function scan(Request $request)
+    // Fungsi untuk mendapatkan daftar UID yang diizinkan
+    public function allowedUIDs()
     {
-        $id_card = $request->input('id_card');
-
-        // Proses lebih lanjut untuk ID Card yang diterima dari IoT
-        $anggota = Anggota::where('id_card', $id_card)->first();
-        if ($anggota) {
-            return response()->json(['status' => 'success', 'message' => 'Anggota found', 'data' => $anggota]);
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'Anggota not found']);
-        }
+        $anggota = Anggota::pluck('id_card', );
+        return response()->json($anggota);
     }
 
-    public function fillIdCard(Request $request)
+    // Fungsi untuk menyimpan UID ke database
+    public function storeIDCard(Request $request)
     {
-        $id_card = $request->input('id_card'); // Logika untuk memeriksa dan mengirimkan data ID Card 
-        return response()->json(['id_card' => $id_card]);
+        $validated = $request->validate([
+            'id_card' => 'required|unique:anggota,id_card',
+        ]);
+
+        $anggota = new Anggota();
+        $anggota->id_card = $validated['id_card'];
+        $anggota->save();
+        // broadcast(new AnggotaUpdated($anggota))->toOthers();
+
+        return response()->json(['message' => 'ID Card berhasil disimpan.']);
     }
 
+    public function updateAnggota(Request $request)
+    {
+        $anggota = Anggota::find($request->id);
+        $anggota->update($request->all());
+
+        // broadcast(new AnggotaUpdated($anggota))->toOthers();
+
+        return response()->json(['success' => true]);
+    }
 }
+?>

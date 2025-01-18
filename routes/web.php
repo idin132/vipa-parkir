@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PengunjungController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,14 +19,24 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/table', function() {
+Route::get('/table', function () {
     return view('admin.anggota.index');
 });
 
+Route::get('/TopUp-Saldo', function () {
+    return view('admin.anggota.TopUp');
+});
+
 // Login/Logout
-Route::get('/login', [LoginController::class,'index'])->name('login');
-Route::post('logout', [LoginController::class,'actionlogout'])->name('logout');
-Route::post('/actionlogin', [LoginController::class,'actionlogin'])->name('actionlogin');
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('logout', [LoginController::class, 'actionlogout'])->name('logout');
+Route::post('/actionlogin', [LoginController::class, 'actionlogin'])->name('actionlogin');
+
+Route::get('/anggota/{id_card}/top-up', [AnggotaController::class, 'showTopUpForm'])->name('FormTopUp');
+Route::post('/anggota/{id_card}/top-up', [AnggotaController::class, 'topUp'])->name('TopUp');
+
+
+
 
 // Untuk Admin
 Route::group(['middleware' => ['auth']], function () {
@@ -34,9 +45,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
     // resource controller
     Route::resource('anggota', AnggotaController::class);
-    
-    // Route::get('/form', 'MemberController@create')->name('members.create'); 
-    // Route::post('/members', 'MemberController@store')->name('members.store');
-    
+    Route::resource('pengunjung', PengunjungController::class);
+
 });
 

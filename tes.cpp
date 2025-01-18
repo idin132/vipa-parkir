@@ -1,0 +1,1 @@
+const String allowedUIDs[10] = {"SELECT id_card FROM Anggota where status = "aktif""}; // Daftar UID kartu yang diizinkan       

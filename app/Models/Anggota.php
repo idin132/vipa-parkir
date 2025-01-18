@@ -17,4 +17,10 @@ class Anggota extends Model
         'saldo',
         'telegram'
     ];
+    
+    public function topUp($saldo)
+    {
+        $this->saldo += $saldo;
+        $this->save();
+    }
 }
