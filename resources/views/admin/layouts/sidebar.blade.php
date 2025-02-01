@@ -16,11 +16,8 @@
     <div class="l-navbar" id="nav-bar">
         <nav class="nav">
             <div>
-                <a href="#" class="nav_logo">
-                    <i class='bx bx-layer nav_logo-icon'></i>
-                    <span class="nav_logo-name">VIPA</span>
-                </a>
-                <div class="nav_list">
+                <img style="width: 120px;" src="assets/login/css/images/logo-vipa.png" alt="">
+                <div class="nav_list" style="margin-top: 20px">
                     <a href="{{ route('dashboard.index')}}" class="nav_link active">
                         <i class='bx bx-grid-alt nav_icon'></i>
                         <span class="nav_name">Dashboard</span>
