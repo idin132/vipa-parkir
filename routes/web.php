@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnggotaController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PengunjungController;
 use Illuminate\Support\Facades\Route;
@@ -17,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('admin.auth.login');
 });
 Route::get('/table', function () {
     return view('admin.anggota.index');
@@ -35,14 +36,21 @@ Route::post('/actionlogin', [LoginController::class, 'actionlogin'])->name('acti
 Route::get('/anggota/{id_card}/top-up', [AnggotaController::class, 'showTopUpForm'])->name('FormTopUp');
 Route::post('/anggota/{id_card}/top-up', [AnggotaController::class, 'topUp'])->name('TopUp');
 
+Route::post('/block-user/{id_card}', [AnggotaController::class, 'blokir'])->name('block-user');
+Route::post('/aktif-user/{id_card}', [AnggotaController::class, 'BukaBlokir'])->name('aktif-user');
+Route::get('/history/{id_card}/riwayat', [AnggotaController::class, 'History'])->name('transaction-history');
+
+
+
+Route::get('adminlte', function() {
+    return view('admin/layouts/template');
+});
 
 
 
 // Untuk Admin
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard.index');
-    });
+    Route::resource('dashboard', DashboardController::class);
     // resource controller
     Route::resource('anggota', AnggotaController::class);
     Route::resource('pengunjung', PengunjungController::class);

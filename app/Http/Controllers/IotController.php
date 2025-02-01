@@ -1,18 +1,17 @@
-<?php
-
+<?php 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Anggota;
-use App\Events\AnggotaUpdated;
-
+use App\Models\Pengunjung;
+use Carbon\Carbon;
 
 class IotController extends Controller
 {
     // Fungsi untuk mendapatkan daftar UID yang diizinkan
     public function allowedUIDs()
     {
-        $anggota = Anggota::pluck('id_card', );
+        $anggota = Anggota::pluck('id_card');
         return response()->json($anggota);
     }
 
@@ -26,19 +25,52 @@ class IotController extends Controller
         $anggota = new Anggota();
         $anggota->id_card = $validated['id_card'];
         $anggota->save();
-        // broadcast(new AnggotaUpdated($anggota))->toOthers();
 
         return response()->json(['message' => 'ID Card berhasil disimpan.']);
     }
 
-    public function updateAnggota(Request $request)
+    // Fungsi untuk menangani tap kartu
+    public function handleTap(Request $request)
     {
-        $anggota = Anggota::find($request->id);
-        $anggota->update($request->all());
+        $idCard = $request->id_card;
+        $anggota = Anggota::where('id_card', $idCard)->first();
 
-        // broadcast(new AnggotaUpdated($anggota))->toOthers();
+        if ($anggota) {
+            $pengunjung = Pengunjung::where('id_card', $idCard)->where('status', 'aktif')->first();
+            if ($pengunjung) {
+                // Update data ketika keluar parkir
+                $jam_keluar = Carbon::now();
+                $durasi = $jam_keluar->diffInSeconds(Carbon::parse($pengunjung->jam_masuk));
+                $tarif = min(10000, ceil($durasi / 3600) * 2000);
 
-        return response()->json(['success' => true]);
+                if ($anggota->saldo >= $tarif) {
+                    $anggota->saldo -= $tarif;
+                    $anggota->save();
+
+                    $pengunjung->jam_keluar = $jam_keluar;
+                    $pengunjung->durasi = gmdate('H:i:s', $durasi);
+                    $pengunjung->tarif = $tarif;
+                    $pengunjung->status = 'selesai';
+                    $pengunjung->save();
+
+                    return response()->json(['message' => 'Proses berhasil.']);
+                } else {
+                    return response()->json(['message' => 'Saldo tidak mencukupi.'], 400);
+                }
+            } else {
+                // Simpan data ketika masuk parkir
+                Pengunjung::create([
+                    'id_card' => $anggota->id_card,
+                    'nama' => $anggota->nama,
+                    'tanggal' => Carbon::now()->toDateString(),
+                    'jam_masuk' => Carbon::now(),
+                    'status' => 'aktif'
+                ]);
+            }
+
+            return response()->json(['message' => 'Proses berhasil.']);
+        }
+
+        return response()->json(['message' => 'ID Card tidak ditemukan.'], 404);
     }
 }
-?>

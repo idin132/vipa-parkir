@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,32 +16,20 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
 
-    <title>Data Pengunjung Parkir</title>
+    <title>Riwayat Transaksi</title>
 </head>
-
 <body>
-    @extends('admin.layouts.sidebar')
     <div class="main-content">
         <div class="row mt-4">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header mb-2">
                         <center>
-                            <h5 class="card-title">Data Pengunjung Parkir</h5>
+                            <h5 class="card-title">Riwayat Transaksi - ID Card: {{ $id_card }}</h5>
                         </center>
                     </div>
-                    <form class="d-flex align-items-center">
-                        <!-- <a class="btn btn-success mx-2" href="#"><i class="bi bi-file-excel mr-2"></i> Export Excel</a> -->
-                    </form>
-
-                    @if(session()->has('message'))
-                        <div class="alert alert-success">
-                            {{ session()->get('message') }}
-                        </div>
-                    @endif
-
                     <div class="card-body">
-                        <table id="Pengunjung" class="table table-striped">
+                        <table id="TransactionHistory" class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -56,19 +43,19 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($pengunjung as $var)
+                                @foreach ($anggota as $transaction)
                                     <tr>
-                                        <td>{{ $var->id }}</td>
-                                        <td>{{ $var->id_card }}</td>
-                                        <td>{{ $var->tanggal }}</td>
-                                        <td>{{ $var->jam_masuk }}</td>
-                                        <td>{{ $var->durasi }}</td>
-                                        <td>{{ $var->jam_keluar }}</td>
-                                        <td>{{ $var->tarif }}</td>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $transaction->id_card }}</td>
+                                        <td>{{ $transaction->tanggal }}</td>
+                                        <td>{{ $transaction->jam_masuk }}</td>
+                                        <td>{{ $transaction->durasi }}</td>
+                                        <td>{{ $transaction->jam_keluar }}</td>
+                                        <td>{{ $transaction->tarif }}</td>
                                         <td>
-                                            @if($var->status == 'selesai')
+                                            @if($transaction->status == 'selesai')
                                                 <button class="btn btn-success">Selesai</button>
-                                            @elseif($var->status == "aktif")
+                                            @elseif($transaction->status == "aktif")
                                                 <button class="btn btn-warning">Aktif</button>
                                             @else
                                                 -
@@ -83,12 +70,14 @@
             </div>
         </div>
     </div>
+    <br>
+    <br>
+    <center><h3><a href="{{route('anggota.index')}}">Kembali</a></h3></center>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/2.1.4/js/dataTables.min.js"></script>
     <script>
-        let table = new DataTable('#Pengunjung');
+        let table = new DataTable('#TransactionHistory');
     </script>
 </body>
-
 </html>

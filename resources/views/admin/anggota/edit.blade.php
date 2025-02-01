@@ -31,11 +31,6 @@
                                             value="{{($anggota->id_card)}}" id="" readonly>
                                     </div>
                                     <div class="form-group">
-                                        <label class="font-weight-bold" for="id_chat">ID Chat</label>
-                                        <input type="text" name="id_chat" class="form-control"
-                                            value="{{($anggota->id_chat)}}" id="">
-                                    </div>
-                                    <div class="form-group">
                                         <label class="font-weight-bold" for="nama_anggota">Nama</label>
                                         <input type="text" name="nama_anggota" class="form-control"
                                             value="{{($anggota->nama_anggota)}}" id="">
@@ -49,11 +44,6 @@
                                             <option value="laki-laki" {{ $anggota->jenis_kelamin == 'laki-laki' ? 'selected' : '' }}>laki-laki</option>
                                         </select>
                                     </div>
-                                    <!-- <div class="form-group">
-                                        <label class="font-weight-bold" for="saldo">Saldo</label>
-                                        <input type="text" name="saldo" class="form-control"
-                                            value="{{($anggota->saldo)}}" id="">
-                                    </div> -->
                                 </div>
                             </div>
 

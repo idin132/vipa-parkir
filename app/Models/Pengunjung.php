@@ -16,6 +16,7 @@ class Pengunjung extends Model
         'jam_masuk',
         'durasi',
         'jam_keluar',
+        'tarif',
         'status',
     ];
 }

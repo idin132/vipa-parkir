@@ -12,9 +12,6 @@
         <div class="header_toggle">
             <i class='bx bx-menu' id="header-toggle"></i>
         </div>
-        <div class="header_img">
-            <img src="https://i.imgur.com/hczKIze.jpg" alt="">
-        </div>
     </header>
     <div class="l-navbar" id="nav-bar">
         <nav class="nav">
@@ -24,7 +21,7 @@
                     <span class="nav_logo-name">VIPA</span>
                 </a>
                 <div class="nav_list">
-                    <a href="/dashboard" class="nav_link active">
+                    <a href="{{ route('dashboard.index')}}" class="nav_link active">
                         <i class='bx bx-grid-alt nav_icon'></i>
                         <span class="nav_name">Dashboard</span>
                     </a>
