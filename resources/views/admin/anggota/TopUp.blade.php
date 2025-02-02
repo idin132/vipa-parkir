@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 <style>
     .topup-form {
         max-width: 400px;
@@ -9,7 +12,7 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         margin-top: 15rem;
     }
-    
+
     .topup-form .form-group {
         margin-bottom: 15px;
     }
@@ -19,7 +22,7 @@
         margin-bottom: 5px;
         font-weight: bold;
     }
-    
+
     .topup-form input[type="number"] {
         width: 100%;
         padding: 10px;
@@ -28,13 +31,13 @@
         box-sizing: border-box;
         transition: border-color 0.3s;
     }
-    
+
     .topup-form input[type="number"]:focus {
         border-color: #80bdff;
         outline: none;
         box-shadow: 0 0 5px rgba(128, 189, 255, 0.3);
     }
-    
+
     .btn-submit {
         display: inline-block;
         width: 100%;
@@ -48,9 +51,13 @@
         cursor: pointer;
         transition: background-color 0.3s;
     }
-    
+
     .btn-submit:hover {
         background-color: #0056b3;
+    }
+    .same-size {
+        width: 100%;
+        margin-top: 10px;
     }
 </style>
 
@@ -61,5 +68,6 @@
         <label for="amount">Jumlah Top-Up:</label>
         <input type="number" id="amount" name="amount" placeholder="Masukkan jumlah" required>
     </div>
-    <button type="submit" class="btn-submit">Top Up</button>
+    <button type="submit" class="btn btn-submit">Top Up</button>
+    <button type="button" class="btn btn-info same-size" onclick="window.location.href='{{ route('anggota.index') }}'">Kembali</button>
 </form>

@@ -23,13 +23,13 @@ Servo myServo; // Membuat instance servo
 LiquidCrystal_I2C lcd(0x27, 16, 2); // Inisialisasi LCD dengan alamat I2C 0x27
 
 // Konfigurasi WiFi
-const char* ssid = "IDIN";  // Ganti dengan SSID WiFi Anda
+const char* ssid = "Naufal";  // Ganti dengan SSID WiFi Anda
 const char* password = "13122004";  // Ganti dengan password WiFi Anda
 
 // URL Server API (Ganti dengan URL server Anda)
-const char* allowedUIDsURL = "http://192.168.56.164:8000/api/allowed-uids";
-const char* handleTapURL = "http://192.168.56.164:8000/api/handle-tap";
-const char* storeIDURL = "http://192.168.56.164:8000/api/store-id_card";
+const char* allowedUIDsURL = "http://192.168.1.36:8000/api/allowed-uids";
+const char* handleTapURL = "http://192.168.1.36:8000/api/handle-tap";
+const char* storeIDURL = "http://192.168.1.36:8000/api/store-id_card";
 
 bool accessGranted;
 

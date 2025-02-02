@@ -44,16 +44,23 @@
                                             <option value="laki-laki" {{ $anggota->jenis_kelamin == 'laki-laki' ? 'selected' : '' }}>laki-laki</option>
                                         </select>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="font-weight-bold" for="nama_anggota">Saldo</label>
+                                        <input type="text" name="saldo" class="form-control"
+                                            value="{{($anggota->saldo)}}" id="" readonly>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <button type="submit" class="btn btn-primary">SIMPAN</button>
-                                    <button type="reset" class="btn btn-warning">RESET</button>
-                                    <a type="button" class="btn btn-info" href="{{ route('anggota.index')}}">Kembali</a>
+                            <center>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-primary">SIMPAN</button>
+                                        <button type="reset" class="btn btn-warning">RESET</button>
+                                        <a type="button" class="btn btn-info"
+                                            href="{{ route('anggota.index')}}">Kembali</a>
+                                    </div>
                                 </div>
-                            </div>
+                            </center>
                         </form>
                     </div>
                 </div>
